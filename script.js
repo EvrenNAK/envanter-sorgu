@@ -26,11 +26,11 @@ function search() {
 
   if (!val) return;
 
-  const results = data.filter(r => {
-    const stok = String(r[keys.stok] ?? "");
-    const barkod = String(r[keys.barkod] ?? "");
-    return stok.includes(val) || barkod.includes(val);
-  });
+  const results = data.filter(row =>
+    Object.values(row).some(cell =>
+      String(cell).toLowerCase().includes(val.toLowerCase())
+    )
+  );
 
   if (results.length === 0) {
     table.innerHTML = `<tr><td colspan="5">Sonuç yok</td></tr>`;
@@ -49,3 +49,4 @@ function search() {
     `;
   });
 }
+
