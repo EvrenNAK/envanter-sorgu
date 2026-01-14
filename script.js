@@ -20,15 +20,16 @@ fetch("envanter.xlsx")
   });
 
 function search() {
-  const val = document.getElementById("searchInput").value.trim();
+  const val = document.getElementById("searchInput").value.trim().toLowerCase();
   const table = document.getElementById("resultTable");
   table.innerHTML = "";
 
   if (!val) return;
 
+  // 1️⃣ Aynı barkod / 500 koduna sahip TÜM SATIRLARI BUL
   const results = data.filter(row =>
     Object.values(row).some(cell =>
-      String(cell).toLowerCase().includes(val.toLowerCase())
+      String(cell).toLowerCase().includes(val)
     )
   );
 
@@ -37,6 +38,7 @@ function search() {
     return;
   }
 
+  // 2️⃣ BULUNAN TÜM SATIRLARI LOKASYON BAZLI LİSTELE
   results.forEach(r => {
     table.innerHTML += `
       <tr>
@@ -49,4 +51,3 @@ function search() {
     `;
   });
 }
-
